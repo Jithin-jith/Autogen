@@ -1,3 +1,6 @@
 autogen
 python-dotenv
 ag2[openai]
+matplotlib 
+numpy
+yfinance
