@@ -94,3 +94,54 @@ These are **structural approaches** that influence conversational patterns:
 
 > 💡 **Tip:** Combining these patterns can lead to powerful hybrid workflows.  
 > For example, a **Group Chat** with **Nested Chats** allows brainstorming with experts consulted on demand.
+
+# 📝 Summary Methods in AutoGen
+
+In **AutoGen**, **summary methods** determine *how* the conversation history between agents is summarized before being passed to the model.  
+This helps manage token usage efficiently and ensures the model stays contextually aware.
+
+---
+
+## 📌 Types of Summary Methods
+
+### 1. **`last_message`**
+- **Description:**  
+  Only the **last message** in the conversation history is used as context for the next interaction.
+- **When to Use:**  
+  - When you don’t need the full history.
+  - When the latest message contains enough context for the model to respond.
+- **Pros:**  
+  - Minimal token usage.
+  - Very fast.
+- **Cons:**  
+  - Lacks long-term memory of the conversation.
+
+---
+
+### 2. **`reflection_with_llm`**
+- **Description:**  
+  Uses the **LLM itself** to summarize or "reflect" on the previous messages, generating a condensed version of the conversation history.
+- **When to Use:**  
+  - When the conversation is long and context is important.
+  - When you want the LLM to maintain a coherent understanding of the discussion.
+- **Pros:**  
+  - Preserves important details without storing the full conversation.
+  - Works well for complex, multi-turn interactions.
+- **Cons:**  
+  - Slightly higher token usage (due to the summarization process).
+  - More computationally expensive.
+
+---
+
+## 📊 Quick Comparison
+
+| Summary Method         | Context Retained         | Token Usage | Speed | Best For |
+|------------------------|--------------------------|-------------|-------|----------|
+| `last_message`         | Only last message        | Very Low    | Fast  | Short, simple conversations |
+| `reflection_with_llm`  | Summarized full history  | Moderate    | Medium| Long, detailed discussions  |
+
+---
+
+💡 **Tip:**  
+If you're building an **agent with short interactions** → use `last_message`.  
+If you're building an **agent that needs memory** → use `reflection_with_llm`.
